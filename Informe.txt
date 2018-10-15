@@ -1,0 +1,5 @@
+Informe
+- Manual de instalación y uso (5 puntos)
+- Reporte por cada método implementado con análisis en detalle, métricas de
+rendimiento, diferentes ajustes de modelo para mejorar rendimiento, etc. (20
+puntos)
