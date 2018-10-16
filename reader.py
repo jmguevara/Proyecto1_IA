@@ -25,21 +25,5 @@ def get_col(col_number):
         array.append(row[col_number])
     return array[1:]
         
-def mean(array):
-    total=0
-    for i in array:
-        total=total + float(i)
-    return total/len(array)
-
-def standardDeviation(array, mean):
-    total=0
-    for i in array:
-        total += (i- mean)*(i - mean)
-
-    total=total/(len(array)-1)
-    total=math.sqrt(total)
-    return total
-
-
-
-
+def zscore(element,mean,deviation):
+    return (element-mean)/deviation
