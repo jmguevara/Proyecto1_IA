@@ -1,7 +1,7 @@
 """
 Module to get standarized data set
 """
-#https://github.com/danielpang/decision-trees/blob/master/learn.py
+
 import reader
 import math
 import pandas as pd
@@ -50,7 +50,7 @@ def normalization():
             d=standardDeviation(col,m)
             row.append(round(zscore(x,m,d),2))
         z_matrix.append(row)
-    print('z_matrix created')
+        
 
 def get_z_matrix():
     return z_matrix
@@ -63,7 +63,7 @@ def to_csv():
     print('z_matrix.csv created!')
 
 normalization()
-
+to_csv()
 
 
 

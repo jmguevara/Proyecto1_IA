@@ -1,12 +1,16 @@
+"""
+Module to create a decision tree
+"""
+#https://github.com/danielpang/decision-trees/blob/master/learn.py
 import standardization
-
 import sys
 import math
 import pandas as pd
 import standardization as st
 
-z_matrix = st.get_z_matrix()
-headers = z_matrix[0][1:]
+
+z_matrix = pd.read_csv('z_matrix.csv')
+headers = st.get_z_matrix()[0][1:]
 
 
 
@@ -138,23 +142,21 @@ def predict(node, row_df):
 	elif row_df[node.attr] > node.thres:
 		return predict(node.right, row_df)
 
-# Given a set of data, make a prediction for each instance using the Decision Tree
+# 
 def test_predictions(root, df):
-	num_data = df.shape[0]
-	num_correct = 0
 	for index,row in df.iterrows():
 		prediction = predict(root, row)
-		if prediction == row['Outcome']:
-			num_correct += 1
-	return round(num_correct/num_data, 2)
+		print('----------')
+		print(prediction)
+		
 
 # Prints the tree level starting at given level
 def print_tree(root, level):
-	print(counter*" ", end="")
+	print('--------------')
 	if root.leaf:
-		print(root.predict)
+		print('prediccion: ',root.predict,' nivel arbol: ',level)
 	else:
-		print(root.attr)
+		print('atributo: ',root.attr,' nivel arbol: ',level)
 	if root.left:
 		print_tree(root.left, level + 1)
 	if root.right:
@@ -164,27 +166,41 @@ def print_tree(root, level):
 # where 0 means healthy and 1 means colic
 def clean(csv_file_name):
 	df = pd.read_csv(csv_file_name, header=None)
-	df.columns = ['K', 'Na', 'CL', 'HCO', 'Endotoxin', 'Anioingap', 'PLA2', 'SDH', 'GLDH', 'TPP', 'Breath rate', 'PCV', 'Pulse rate', 'Fibrinogen', 'Dimer', 'FibPerDim', 'Diagnosis']
+	df.columns = headers
 	# Create new column 'Outcome' that assigns healthy horses a value of 0 (negative case) and
 	# horses with colic a value of 1 (positive case), this makes creating our decision tree easier
 	df['Outcome'] = 0
-	df.loc[df['Diagnosis'] == 'colic.', 'Outcome'] = 1
-	df.drop(['Diagnosis'], axis=1 )
+	df.loc[df['diagnosis'] == 'M', 'Outcome'] = 1
+	df.drop(['diagnosis'], axis=1 )
 	cols = df.columns
 	df[cols] = df[cols].apply(pd.to_numeric, errors='coerce')
 	return df
 
-def main():
-	# An example use of 'build_tree' and 'predict'
-	df_train = clean('horseTrain.txt')
-	attributes =  ['K', 'Na', 'CL', 'HCO', 'Endotoxin', 'Anioingap', 'PLA2', 'SDH', 'GLDH', 'TPP', 'Breath rate', 'PCV', 'Pulse rate', 'Fibrinogen', 'Dimer', 'FibPerDim']
-	root = build_tree(df_train, attributes, 'Outcome')
 
-	print("Accuracy of test data")
-	df_test = clean('horseTest.txt')
-	print(str(test_predictions(root, df_test)*100.0) + '%')
+
+
 
 """
+def main():
+	# An example use of 'build_tree' and 'predict'
+	dfprueba = pd.DataFrame(z_matrix)
+	dfprueba = dfprueba.drop(0)
+	dfprueba = dfprueba.drop(0, axis=1)
+	dfprueba = dfprueba.head(100)
+	dfprueba.to_csv('daframe_prueba.csv', header=None, index=None)
+	
+	df_train = clean('daframe_prueba.csv')
+	attributes =  headers[1:]
+	root = build_tree(df_train, attributes, 'Outcome')
+
+	print_tree(root,0)
+
+	#print("Accuracy of test data")
+	df_test = clean('daframe_prueba.csv')
+	test_predictions(root, df_test)
+
+
 if __name__ == '__main__':
 	main()
+
 """
