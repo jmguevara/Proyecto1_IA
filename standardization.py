@@ -1,9 +1,10 @@
 """
 Module to get standarized data set
 """
-
+#https://github.com/danielpang/decision-trees/blob/master/learn.py
 import reader
 import math
+import pandas as pd
 
 z_matrix=[]
 matrix = reader.get_matrix()
@@ -53,7 +54,10 @@ def normalization():
 def get_z_matrix():
     return z_matrix
 
-
+def to_csv():
+    df = pd.DataFrame(z_matrix)
+    df.to_csv("z_matrix.csv", header=None, index=None)
+    print('z_matrix.csv created!')
 
 
 
