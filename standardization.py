@@ -8,6 +8,7 @@ import pandas as pd
 
 z_matrix=[]
 matrix = reader.get_matrix()
+print('Building z_matrix...')
 
 #returns n column from the matrix, without the heading
 def get_col(col_number):    
@@ -56,9 +57,12 @@ def get_z_matrix():
 
 def to_csv():
     df = pd.DataFrame(z_matrix)
+    df=df.drop(0) #delete headers
+    df=df.drop(0,axis=1) #delete 'id' column
     df.to_csv("z_matrix.csv", header=None, index=None)
     print('z_matrix.csv created!')
 
+normalization()
 
 
 
