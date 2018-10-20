@@ -144,12 +144,14 @@ def predict(node, row_df):
 		return predict(node.right, row_df)
 
 # 
-def test_predictions(root, df):
-	for index,row in df.iterrows():
-		prediction = predict(root, row)
-		print('----------')
-		print(prediction)
+def test_predictions(df_test):
+        r_data=random_data_sets()
+        forest=trainingForest(r_data)
+        
+	for index,row in df_test.iterrows():
+		prediction = predictForest(forest,row)
 		
+				
 
 # Prints the tree level starting at given level
 def print_tree(root, level):
