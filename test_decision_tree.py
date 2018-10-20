@@ -13,7 +13,7 @@ from decision_tree import x_aux
 from decision_tree import random_data_sets
 from decision_tree import trainingForest
 from decision_tree import predictForest
-from decision_tree import test_predictions
+
 
 
 def test_node():
