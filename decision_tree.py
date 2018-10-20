@@ -5,6 +5,7 @@ Module to create a decision tree
 import standardization
 import sys
 import math
+import random
 import pandas as pd
 import standardization as st
 
@@ -175,9 +176,47 @@ def clean(csv_file_name):
 	cols = df.columns
 	df[cols] = df[cols].apply(pd.to_numeric, errors='coerce')
 	return df
-
-
-
+def x_aux(x):
+        new_x=[]
+        for row in x:
+                new_x.append(row[2:])
+        return new_x
+        
+def random_data_sets():
+        x=st.get_z_matrix()[1:]#delete headers
+        x=x_aux(x)#delete id, result columns
+        datasets=[]
+        dataset_1=[]
+        dataset_2=[]
+        dataset_3=[]
+        dataset_4=[]
+        dataset_5=[]
+        for i in range(0,99):
+                rnd=random.randint(0,len(x)-1)
+                dataset_1.append(x[rnd])
+                x.remove(x[rnd])
+        for i in range(0,99):
+                rnd=random.randint(0,len(x)-1)
+                dataset_2.append(x[rnd])
+                x.remove(x[rnd])
+        for i in range(0,99):
+                rnd=random.randint(0,len(x)-1)
+                dataset_3.append(x[rnd])
+                x.remove(x[rnd])
+        for i in range(0,99):
+                rnd=random.randint(0,len(x)-1)
+                dataset_4.append(x[rnd])
+                x.remove(x[rnd])        
+        for i in range(0,99):
+                rnd=random.randint(0,len(x)-1)
+                dataset_5.append(x[rnd])
+                x.remove(x[rnd])
+        datasets.append(dataset_1)
+        datasets.append(dataset_2)
+        datasets.append(dataset_3)
+        datasets.append(dataset_4)
+        datasets.append(dataset_5)
+        return datasets
 
 
 """
