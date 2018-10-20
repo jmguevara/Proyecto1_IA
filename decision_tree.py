@@ -218,6 +218,41 @@ def random_data_sets():
         datasets.append(dataset_5)
         return datasets
 
+def trainingForest(sub_data):
+        
+        forest = []
+        for index in range (0,5):
+                root = build_tree(sub_data[index], headers, 'Outcome')
+                forest.append(root)
+
+        return forest
+
+
+def predictForest(forest, ejemplo):
+
+        predictions=[]
+        
+        for index in forest:
+
+                prediction=predict(index,ejemplo)
+                predictions.append(prediction)
+
+
+        count1=0
+        count0=0
+
+        for index in predictions:
+                if index == 1:
+                        count1+=1
+                else:
+                        count0+=1
+
+        if count1 > count0:
+                print('M')
+
+        else:
+                print('B')
+                
 
 """
 def main():
