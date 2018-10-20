@@ -82,7 +82,9 @@ def info_gain(df, attribute, predict_attr, threshold):
 # Returns the number of positive and negative data
 def num_class(df, predict_attr):
 	p_df = df[df[predict_attr] == 1]
+	print('-13.1----------n')
 	n_df = df[df[predict_attr] == 0]
+	print('-13.1----------p')
 	return p_df.shape[0], n_df.shape[0]
 
 # Chooses the attribute and its threshold with the highest info gain
@@ -105,7 +107,14 @@ def choose_attr(df, attributes, predict_attr):
 # and a prediction attribute
 def build_tree(df, cols, predict_attr):
 	# Get the number of positive and negative examples in the training data
+	print('-13.1----------')
+	print(df)
+	print('-13.1----------')
+	print(cols)
+	print('-13.1----------')
+	print(predict_attr)
 	p, n = num_class(df, predict_attr)
+	print(p, n)
 	# If train data has all positive or all negative values
 	# then we have reached the end of our tree
 	if p == 0 or n == 0:
@@ -144,14 +153,8 @@ def predict(node, row_df):
 		return predict(node.right, row_df)
 
 # 
-def test_predictions(df_test):
-        r_data=random_data_sets()
-        forest=trainingForest(r_data)
-        
-	for index,row in df_test.iterrows():
-		prediction = predictForest(forest,row)
+
 		
-				
 
 # Prints the tree level starting at given level
 def print_tree(root, level):
@@ -169,14 +172,28 @@ def print_tree(root, level):
 # where 0 means healthy and 1 means colic
 def clean(csv_file_name):
 	df = pd.read_csv(csv_file_name, header=None)
+	print('-1----------')
+	print(df)
+	print('-2----------')
+	print(headers)
+	print('-3----------')
+	print(print(df.columns))
+	print('-4----------')
 	df.columns = headers
+	print('-5----------')
 	# Create new column 'Outcome' that assigns healthy horses a value of 0 (negative case) and
 	# horses with colic a value of 1 (positive case), this makes creating our decision tree easier
+	print('-6----------')
 	df['Outcome'] = 0
+	print('-7----------')
 	df.loc[df['diagnosis'] == 'M', 'Outcome'] = 1
+	print('-8----------')
 	df.drop(['diagnosis'], axis=1 )
+	print('-9----------')
 	cols = df.columns
+	print('-10----------')
 	df[cols] = df[cols].apply(pd.to_numeric, errors='coerce')
+	print('-11----------')
 	return df
 def x_aux(x):
         new_x=[]
@@ -214,18 +231,29 @@ def random_data_sets():
                 dataset_5.append(x[rnd])
                 x.remove(x[rnd])
         datasets.append(dataset_1)
+        #print(dataset_1)
         datasets.append(dataset_2)
         datasets.append(dataset_3)
         datasets.append(dataset_4)
         datasets.append(dataset_5)
+        
         return datasets
 
+
+
 def trainingForest(sub_data):
-        
+        print('-13.1----------')
         forest = []
+        print('-13.2----------')
         for index in range (0,5):
-                root = build_tree(sub_data[index], headers, 'Outcome')
+                print('-13.3----------')
+                print(index)
+                root = build_tree(pd.DataFrame(sub_data[index]), headers[1:], 'Outcome')
+                print(root)
+                print('-13.4----------')
                 forest.append(root)
+                print('-13.5----------')
+        print('-13.6----------')
 
         return forest
 
@@ -254,29 +282,28 @@ def predictForest(forest, ejemplo):
 
         else:
                 print('B')
-                
 
-"""
+
+def test_predictions(df_test):
+        print('-12----------')
+        r_data = random_data_sets()
+        print('-13----------')
+        forest = trainingForest(r_data)
+        print('-14----------')
+        for index,row in df_test.iterrows():
+                predictForest(forest,row)
+                print('-15----------')
+
+        print('-16----------')
+
 def main():
-	# An example use of 'build_tree' and 'predict'
-	dfprueba = pd.DataFrame(z_matrix)
-	dfprueba = dfprueba.drop(0)
-	dfprueba = dfprueba.drop(0, axis=1)
-	dfprueba = dfprueba.head(100)
-	dfprueba.to_csv('daframe_prueba.csv', header=None, index=None)
 	
-	df_train = clean('daframe_prueba.csv')
-	attributes =  headers[1:]
-	root = build_tree(df_train, attributes, 'Outcome')
-
-	print_tree(root,0)
-
-	#print("Accuracy of test data")
+	
 	df_test = clean('daframe_prueba.csv')
-	test_predictions(root, df_test)
+	test_predictions(df_test)
 
 
 if __name__ == '__main__':
 	main()
 
-"""
+
